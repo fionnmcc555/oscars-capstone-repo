@@ -16,7 +16,7 @@ def main():
         extracted_data = extract_data()
        
         # save extracted data to data/raw 
-        extracted_output_path = "data/raw/oscars.csv"
+        extracted_output_path = "data/raw/unclean_oscars.csv"
         os.makedirs(os.path.dirname(extracted_output_path), exist_ok = True)
         extracted_data.to_csv(extracted_output_path, index=False)
        

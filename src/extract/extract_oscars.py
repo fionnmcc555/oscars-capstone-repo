@@ -15,7 +15,7 @@ EXTRACT_OSCARS_QUERY_FILE = os.path.join(
 
 def extract_oscars():
     try:
-        connection_details = load_db_config()["oscars"]
+        connection_details = load_db_config()["source_database"]
         print(connection_details)
         query = import_sql_query(EXTRACT_OSCARS_QUERY_FILE)
         connection = get_db_connection(connection_details)

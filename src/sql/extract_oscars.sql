@@ -14,5 +14,5 @@ SELECT
     detail,
     multifilmnomination
 FROM 
-    oscars;
+    student.oscars;
 
