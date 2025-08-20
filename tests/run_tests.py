@@ -1,5 +1,6 @@
 import sys
 import subprocess
+import os 
 
 
 def main():
@@ -10,11 +11,36 @@ def main():
         'unit': {'dir': 'tests/unit_tests', 'cov': ['config', 'src']},
         'integration': {'dir': 'tests/integration_tests', 'cov': []},
         'component': {'dir': 'tests/component_tests', 'cov': []},
+        "e2e": {"dir": "tests/e2e_tests", "cov": []},
         'all': {'dir': 'tests', 'cov': ['config', 'etl']},
     }
 
     # Check to see if a command was supplied for the test run
-    if command in test_config:
+    if command == "all":
+        # Run coverage on unit tests only, then run all other tests
+        env = os.environ.copy()
+
+        # Run linting first
+        subprocess.run(["flake8", "."])
+        subprocess.run(["sqlfluff", "lint", "src", "config", "scripts"])
+
+        # Run unit tests with coverage
+        unit_cov_command = (
+            "coverage run --source=config,src "
+            "--omit=*/__init__.py -m pytest --verbose tests/unit_tests "
+            "&& coverage report -m && coverage html "
+            "&& coverage report --fail-under=90"
+        )
+        subprocess.run(unit_cov_command, shell=True, env=env)
+
+        # Run other tests without coverage
+        for test_type in ["integration", "component", "e2e"]:
+            test_dir = test_config[test_type]["dir"]
+            subprocess.run(
+                f"pytest --verbose {test_dir}", shell=True, env=env
+            )
+    
+    elif command in test_config:
         # Access the test_config dictionary to get the test directory
         # and coverage targets
         test_dir = test_config[command]['dir']
@@ -23,7 +49,7 @@ def main():
         # Build the test command for tests with coverage
         if cov_sources:
             cov_command = (
-                f'ENV=test coverage run --source={cov_sources} '
+                f'coverage run --source={cov_sources} '
                 f'--omit=*/__init__.py -m pytest --verbose {test_dir} '
                 '&& coverage report -m && coverage html '
                 '&& coverage report --fail-under=90'

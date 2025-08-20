@@ -9,10 +9,10 @@ SELECT
     film_id,
     "Name",
     nominees,
-    nominees_ids,
+    nominee_ids,
     winner,
     detail,
     multifilmnomination
 FROM 
-    student.oscars;
+    de_2506_a.fm_oscars;
 

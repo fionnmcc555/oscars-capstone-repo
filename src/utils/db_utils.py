@@ -8,7 +8,7 @@ def create_db_engine(connection_params):
             if not param == "password" and not connection_params.get(param):
                 raise ValueError(f"{param} not provided")
         engine = create_engine(
-            f"postgresql+psycopg://{connection_params['user']}"
+            f"postgresql+psycopg2://{connection_params['user']}"
             f":{connection_params['password']}@{connection_params['host']}"
             f":{connection_params['port']}/{connection_params['dbname']}"
         )
