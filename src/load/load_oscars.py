@@ -2,8 +2,11 @@ import pandas as pd
 from sqlalchemy import Connection
 from config.db_config import load_db_config, DatabaseConfigError
 from src.utils.db_utils import get_db_connection
+
+# table name for storing cleaned Oscars data
 TABLE_NAME = "cleaned_fm_oscars"
 
+# function to load transfomed oscars data back into pagila 
 def load_oscars_data(transformed_data):
     connection: Connection | None = None
     try:

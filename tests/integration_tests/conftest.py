@@ -3,6 +3,9 @@ import pytest
 import pathlib
 from config.env_config import setup_env
 
+# conftest.py for integration tests - i had to use gen AI to help create this 
+# as i have little experience with pytest and conftest.py files
+
 @pytest.fixture(scope="session", autouse=True)
 def load_env_for_integration():
     """

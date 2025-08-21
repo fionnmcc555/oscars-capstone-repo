@@ -7,14 +7,14 @@ from src.load.load import load_data
 
 def main():
     try:
-        # set up env from CLI args
+        # set up env 
         setup_env(sys.argv)
         env = os.getenv("ENV", "unknown")
         print(f"ETL pipeline run successfully in {env} environment!")
 
-        # allow tests to redirect I/O
         raw_dir = os.getenv("RAW_DIR", "data/raw")
         out_dir = os.getenv("OUTPUT_DIR", "data/processed")
+        # used gen AI to help me work out how to skip loading for testing
         skip_load = os.getenv("SKIP_LOAD", "").lower() in {"1", "true", "yes"}
 
         # extract
@@ -35,7 +35,7 @@ def main():
         transformed_data.to_csv(transformed_output_path, index=False)
         print(f"Transformed data saved to {transformed_output_path}")
 
-        # load (optional in tests)
+        # load - for testing - skip loading 
         if not skip_load:
             load_data(transformed_data)
         else:

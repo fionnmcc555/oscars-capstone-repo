@@ -1,6 +1,8 @@
 import pandas as pd
 import os
 
+# file utils 
+# did niot end up utilising these files in my project but would liek to implement them in the future
 def find_project_root(marker_file="README.md"):
     current_dir = os.path.abspath(os.path.dirname(__file__))
     while current_dir != os.path.dirname(current_dir):

@@ -1,6 +1,7 @@
 import pandas as pd
 from src.utils.date_utils import standardise_year
 
+# function to clean the extracted oscars dataset
 def clean_oscars(oscars):
     oscars = standardise_award_year(oscars)
     oscars = rename_name_column(oscars)
@@ -9,22 +10,27 @@ def clean_oscars(oscars):
     oscars = drop_duplicates(oscars)
     return oscars 
 
+# function to standardise award_year column to single year 
 def standardise_award_year(oscars):
     oscars['award_year'] = oscars['award_year'].apply(standardise_year).dt.year
     return oscars 
 
+# function to rename the 'Name' column to 'name'
 def rename_name_column(oscars):
     oscars = oscars.rename(columns={"Name": "name"})
     return oscars
 
+# function to drop the mulltifilmnomination column
 def drop_multifilmnomination_column(oscars):
     oscars = oscars.drop(columns=['multifilmnomination'])
     return oscars
 
+# function to fill null values 
 def fill_nulls_in_cols(oscars):
     fill_na_cols = ["name", "film", "nominees", "nominee_ids", "nom_id", "film_id", "detail"]
     oscars[fill_na_cols] = oscars[fill_na_cols].fillna("N/A")
     return oscars
 
+# function to drop any duplicate rows in dataset
 def drop_duplicates(oscars):
     return oscars.drop_duplicates()

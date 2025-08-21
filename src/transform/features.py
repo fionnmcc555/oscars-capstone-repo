@@ -1,11 +1,11 @@
 import pandas as pd 
 
+# function to create new columns in dataset 
 def create_oscars_features(oscars):
     assert oscars is not None, "oscars is None entering create_oscars_features"
     oscars = create_main_category_column(oscars)
     oscars = create_decade_column(oscars)
     return oscars
-
 
 # function to map oscar canonical_category column to main categories
 # I used generative AI to help me come up with this function
@@ -84,10 +84,12 @@ def map_to_main_category(cat: str) -> str:
     # Catch-all
     return "Other / Retired"
 
+# function to create main category column
 def create_main_category_column(oscars):
     oscars['main_category'] = oscars['canonical_category'].apply(map_to_main_category)
     return oscars 
 
+# function to create decade column in oscars dataset to group by decade
 def create_decade_column(oscars):
     oscars['decade'] = (oscars['award_year'] // 10) * 10
     return oscars 

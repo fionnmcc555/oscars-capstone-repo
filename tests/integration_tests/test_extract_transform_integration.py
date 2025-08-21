@@ -2,13 +2,12 @@ import pytest
 from src.extract.extract import extract_data
 from src.transform.transform import transform_data
 
-
+# integration tests for the extract-transform pipeline
 def test_extract_transform_integration():
-    """Integration test: End-to-end extract-transform workflow validation"""
     extracted_data = extract_data()
     result = transform_data(extracted_data)
-
-    # Validate schema and data quality instead of exact match
+    
+    # validate result 
     expected_columns = {"ceremony",
                         "award_year", 
                         "award_class", 
@@ -31,9 +30,8 @@ def test_extract_transform_integration():
     assert result["winner"].dtype == "bool"
 
 
-
+# tests time taken for extract-transform part of pipeline
 def test_extract_transform_performance():
-    """Integration test: Performance requirements validation"""
     import time
 
     start_time = time.time()
@@ -47,16 +45,15 @@ def test_extract_transform_performance():
     ), f"Pipeline took {execution_time:.2f}s, expected <10s"
     assert len(result) > 0, "Pipeline should produce results"
 
-
+# tests that the data volume during extract-transform is reasonable
 def test_extract_transform_data_volume():
-    """Integration test: Validate data processing expectations"""
     extracted_data = extract_data()
     result = transform_data(extracted_data)
 
     raw_oscars = extracted_data
 
-    # Validate reasonable data processing
+    # validate reasonable data processing
     assert len(result) > 0, "Result should not be empty"
     assert len(result) <= len(
         raw_oscars
-    ), "Result should not exceed input transactions"
+    ), "Result should not exceed input oscars"

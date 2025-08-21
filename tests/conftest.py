@@ -2,6 +2,7 @@ import os
 import pytest
 from config.env_config import setup_env
 
+# conftest.py for tests - this is used to set up environment for tests 
 @pytest.fixture(scope="session", autouse=True)
 def setup_test_environment():
     """
@@ -11,6 +12,6 @@ def setup_test_environment():
     env = os.environ.get("ENV")
     if env == "test" and os.path.exists(".env.test"):
         setup_env(["pytest", "test"])
-    # otherwise do nothing
+    
     
 

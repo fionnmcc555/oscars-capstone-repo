@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 import pandas as pd
 
+# e2e tests to check if etl pipeline works correctly
 
 def test_etl_pipeline_success(tmp_path):
     # set up test environment
@@ -40,6 +41,7 @@ def test_etl_pipeline_success(tmp_path):
     assert "ceremony" in result_df.columns, "Missing expected column in output"
 
 
+# test that checks if the piepeline fails with an invalid environment
 def test_etl_pipeline_invalid_environment():
     env = os.environ.copy()
 

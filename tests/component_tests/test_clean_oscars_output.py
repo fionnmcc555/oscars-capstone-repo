@@ -1,5 +1,7 @@
 import pandas as pd
 
+# test that the clean oscars function produces the expected output
+
 def test_clean_oscars_matches_expected():
     # load clean csv
     actual = pd.read_csv("data/processed/clean_oscars.csv")   # adjust path as needed
